@@ -5,3 +5,5 @@ bin/
 .project
 .idea/
 *.iml
+dotnet/PdfToTextDemo/.vs/
+dotnet/PdfToTextDemo/obj/

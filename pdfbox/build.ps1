@@ -122,8 +122,12 @@ Write-Host "Copying IKVM dependencies"
 $ikvm_files = @(
     "$($ikvm_dir)/bin/IKVM.Runtime.dll",
     "$($ikvm_dir)/bin/IKVM.OpenJDK.Core.dll",
+    "$($ikvm_dir)/bin/IKVM.OpenJDK.Media.dll",
+    "$($ikvm_dir)/bin/IKVM.OpenJDK.Security.dll",
     "$($ikvm_dir)/bin/IKVM.OpenJDK.Text.dll",
-    "$($ikvm_dir)/bin/IKVM.OpenJDK.Util.dll"
+    "$($ikvm_dir)/bin/IKVM.OpenJDK.Util.dll",
+    "$($ikvm_dir)/bin/IKVM.OpenJDK.XML.API.dll",
+    "$($ikvm_dir)/bin/IKVM.OpenJDK.SwingAWT.dll"
 )
 
 $ikvm_files | ForEach-Object {
