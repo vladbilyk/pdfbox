@@ -90,6 +90,7 @@ $logging_args = [array]$common_refs + @(
 Write-Host "Building FontBox"
 $fontbox_jar = ".\target\dependency\fontbox-$($project_version)-SNAPSHOT.jar"
 $fontbox_args = [array]$common_refs + @(
+    "-reference:$($bin_dir)/commons-logging.dll",
     "-reference:$($bin_dir)/junit.dll",
     "-target:library",
     "-compressresources",
@@ -100,7 +101,7 @@ $fontbox_args = [array]$common_refs + @(
 & $ikvmc $fontbox_args
 
 Write-Host "Building PDFBox"
-$pdfbox_jar = ".\target\dependency\pdfbox-$($project_version)-SNAPSHOT.jar"
+$pdfbox_jar = ".\target\pdfbox-$($project_version)-SNAPSHOT.jar"
 $pdfbox_args = [array]$common_refs + @(
     "-reference:$($ikvm_dir)/bin/IKVM.AWT.WinForms.dll",
     "-reference:$($ikvm_dir)/bin/IKVM.OpenJDK.SwingAWT.dll",    
@@ -127,7 +128,8 @@ $ikvm_files = @(
     "$($ikvm_dir)/bin/IKVM.OpenJDK.Text.dll",
     "$($ikvm_dir)/bin/IKVM.OpenJDK.Util.dll",
     "$($ikvm_dir)/bin/IKVM.OpenJDK.XML.API.dll",
-    "$($ikvm_dir)/bin/IKVM.OpenJDK.SwingAWT.dll"
+    "$($ikvm_dir)/bin/IKVM.OpenJDK.SwingAWT.dll",
+    "$($ikvm_dir)/bin/IKVM.AWT.WinForms.dll"
 )
 
 $ikvm_files | ForEach-Object {

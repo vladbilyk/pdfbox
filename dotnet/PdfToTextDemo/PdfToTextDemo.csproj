@@ -47,6 +47,9 @@
     <Reference Include="fontbox-2.0.18">
       <HintPath>..\..\pdfbox\target\dlls\fontbox-2.0.18.dll</HintPath>
     </Reference>
+    <Reference Include="IKVM.AWT.WinForms">
+      <HintPath>..\..\pdfbox\target\dlls\IKVM.AWT.WinForms.dll</HintPath>
+    </Reference>
     <Reference Include="IKVM.OpenJDK.Core">
       <HintPath>..\..\pdfbox\target\dlls\IKVM.OpenJDK.Core.dll</HintPath>
     </Reference>

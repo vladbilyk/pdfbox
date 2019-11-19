@@ -10,11 +10,11 @@ namespace PdfToTextDemo
         {
             Console.WriteLine("Launching PDFBox API from .NET");
             Console.WriteLine("Extracting text...");
-            Console.WriteLine(ParseUsingPDFBox("demo.pdf"));
+            Console.WriteLine(ParseUsingPdfBox("demo.pdf"));
             Console.WriteLine("Done!");
         }
 
-        private static string ParseUsingPDFBox(string input)
+        private static string ParseUsingPdfBox(string input)
         {
             PDDocument doc = null;
 
@@ -22,16 +22,11 @@ namespace PdfToTextDemo
             {
                 doc = PDDocument.load(new java.io.File(input));
                 var stripper = new PDFTextStripper();
-                var page = doc.getDocumentCatalog().getPages().get(1);
-
                 return stripper.getText(doc);
             }
             finally
             {
-                if (doc != null)
-                {
-                    doc.close();
-                }
+                doc?.close();
             }
         }
     }
