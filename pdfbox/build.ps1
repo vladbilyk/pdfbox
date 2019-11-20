@@ -4,6 +4,14 @@ $bin_dir = ".\target\$($bin_dir_name)"
 $ikvm_dir = "path to IKVM home"
 $ikvmc = "$($ikvm_dir)/bin/ikvmc.exe"
 
+Write-Host "Building PDFBox sources..."
+Push-Location ..
+mvn clean install
+Pop-Location
+
+Write-Host "Copying dependencies..."
+mvn dependency:copy-dependencies
+
 Write-Host "Creating output folder"
 if (Test-Path $bin_dir)
 {
