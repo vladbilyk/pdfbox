@@ -16,13 +16,11 @@
  */
 package org.apache.pdfbox.filter;
 
-import java.awt.image.BufferedImage;
-import java.awt.image.DataBufferByte;
-import java.awt.image.Raster;
-import java.awt.image.WritableRaster;
+import java.awt.image.*;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.*;
 
 import javax.imageio.IIOException;
 import javax.imageio.ImageIO;
@@ -124,6 +122,11 @@ final class DCTFilter extends Filter
                     // we really tried asking nicely, now we're using brute force.
                     transform = getAdobeTransformByBruteForce(iis);
                 }
+                catch (Error error)
+                {
+                    // we really tried asking nicely, now we're using brute force.
+                    transform = getAdobeTransformByBruteForce(iis);
+                }
                 int colorTransform = transform != null ? transform : 0;
 
                 // 0 = Unknown (RGB or CMYK), 1 = YCbCr, 2 = YCCK
@@ -148,8 +151,23 @@ final class DCTFilter extends Filter
                 raster = fromBGRtoRGB(raster);
             }
 
-            DataBufferByte dataBuffer = (DataBufferByte)raster.getDataBuffer();
-            decoded.write(dataBuffer.getData());
+            if (raster.getDataBuffer() instanceof DataBufferInt) {
+                final DataBufferInt db = (DataBufferInt) raster.getDataBuffer();
+                final int[] data = db.getData();
+
+                ByteBuffer bb = ByteBuffer.allocate(4 * data.length);
+                bb.asIntBuffer().put(data);
+                decoded.write(bb.array());
+            }
+            else if (raster.getDataBuffer() instanceof DataBufferByte)
+            {
+                final DataBufferByte bb = (DataBufferByte) raster.getDataBuffer();
+                decoded.write(bb.getData());
+            }
+            else
+            {
+                throw new Error("Unknown format");
+            }
         }
         finally
         {
@@ -353,6 +371,10 @@ final class DCTFilter extends Filter
             return "";
         }        
         catch (NegativeArraySizeException e)
+        {
+            return "";
+        }
+        catch (Error e)
         {
             return "";
         }
